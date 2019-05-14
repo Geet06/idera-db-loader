@@ -1,0 +1,43 @@
+
+<table align="center">
+<tr>
+  <td>Sql Server :</td>
+  <td><input [(ngModel)]="serverName" type="text" /></td>
+</tr>
+
+<tr>
+  <td>Sql Login :</td>
+  <td><input [(ngModel)]="serverLogin" type="text"/></td>
+</tr>
+<tr>
+  <td>Sql Password :</td>
+  <td><input [(ngModel)]="serverPassword" type="password"/></td>
+</tr>
+<tr>
+  <td><button (click)="connect()">Connect</button></td>
+  <!-- <td><button (click)="CSVfiles()">CSV Files</button></td> -->
+</tr>
+
+</table><br>
+Console:<br>
+<textarea [(ngModel)]='consoleError'></textarea>
+<br>
+<br>
+Server Details Table:
+<table align="center" style="border:2px solid black">
+  <tr>
+    <td>Server Name</td>
+    <td>Activity</td>
+    <td>Start/Stop</td>
+  </tr>
+  <tr *ngFor="let data of serverdetails">
+    <td>{{data.name}}</td>
+    <td [ngStyle]="{'background-color':data.activity?'green':'red'}"></td>
+    <td>
+      <button *ngIf="data.activity" (click)="changeStatus(data.id)">Stop</button>
+      <button *ngIf="!data.activity" (click)="changeStatus(data.id)">Start</button>
+    </td>
+  </tr>
+</table>
+<button (click)="startAll()">Start All</button>
+<button (click)="stopAll()">Stop All</button>
