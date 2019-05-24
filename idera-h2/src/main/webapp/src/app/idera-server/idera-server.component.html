@@ -1,0 +1,80 @@
+<div class="login">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-5">
+        <div class="login-table form-group">
+          <form [formGroup]="serverForm" >
+            <table>
+              <br>
+              <tr>
+                <td>Sql Server :</td>
+                <td><input type="text" id="serverName" formControlName="serverName" class="form-group form-rounded"
+                  [ngStyle]="{'border-color':(submitted && this.serverForm.controls['serverName'].errors) ?'red':''}" /></td>
+              </tr>
+              <!-- <span *ngIf="serverForm.controls['serverName'].errors?.required && serverForm.controls['serverName'].touched"class="greyedOut">This field is required</span> -->
+
+              <tr>
+                <td>Sql Login :</td>
+                <td><input type="text" id="serverLogin" formControlName="serverLogin" class="form-group form-rounded"
+
+                  [ngStyle]="{'border-color':(submitted && this.serverForm.controls['serverLogin'].errors) ?'red':''}"
+                  /></td>
+              </tr>
+              <tr>
+                <td>Sql Password :</td>
+                <td><input type="password" id="serverPassword" formControlName="serverPassword"
+                    class="form-group  form-rounded"
+                    [ngStyle]="{'border-color':(submitted && this.serverForm.controls['serverPassword'].errors) ?'red':''}"  />
+                </td>
+              </tr>
+              <tr>
+                <td><button (click)="connect()" class="btn btn-primary btn-sm  form-rounded"
+                   [value]="submit">Connect</button></td>
+                   <input type="file" accept=".csv" #file style="display:none">
+                <td><button (click)="file.click()" class="btn btn-primary btn-sm form-rounded" >CSV Files</button></td>
+                <!-- <span *ngIF="serverForm.controls['connect'].errors?.touched" class="greyedOut"></span> -->
+              </tr>
+
+            </table>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-sm-7">
+        <br>
+        Console:<br>
+        <textarea [(ngModel)]='consoleError' class="form-rounded console"></textarea>
+      </div>
+
+    </div>
+    <br>
+
+    <table align="center" class="table table-striped table-dark form-rounded server-details">
+      <thead class="table-name">
+        Server Details Table
+      </thead>
+      <tr>
+        <td class="serialno">S No.</td>
+        <td>Server Name</td>
+        <td>Activity</td>
+        <td>Start/Stop</td>
+      </tr>
+
+      <tr *ngFor="let data of serverdetails;let i= index">
+        <td class="serialno">{{i+1}}</td>
+        <td>{{data.name}}</td>
+        <td [ngClass]="data.activity?'progress-bar progress-bar-striped progress-bar-animated bg-success':'progress-bar progress-bar-striped bg-danger'" ></td>
+        <td>
+          <button class="btn btn-danger btn-sm form-rounded" *ngIf="data.activity"
+            (click)="changeStatus(data.id)">Stop</button>
+          <button class="btn btn-success btn-sm form-rounded" *ngIf="!data.activity"
+            (click)="changeStatus(data.id)">Start</button>
+        </td>
+      </tr>
+    </table>
+    <button class="btn btn-success btn-sm form-rounded " (click)="startAll() ">Start All</button>
+    <button class="btn btn-danger btn-sm form-rounded stopAll" (click)="stopAll()">Stop All</button>
+
+  </div>
+  <br><br><br>
+</div>

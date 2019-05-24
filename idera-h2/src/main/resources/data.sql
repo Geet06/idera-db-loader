@@ -1,0 +1,1 @@
+insert into server values(1,true,22,'hbh','hgt',CURRENT_TIMESTAMP());
